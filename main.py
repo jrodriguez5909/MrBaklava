@@ -1,7 +1,49 @@
+import youtube_dl
 import speech_recognition as sr
 import os
 
-from googletrans import Translator
+# from googletrans import Translator
+# from __future__ import unicode_literals
+
+
+################################################################################
+################################################################################
+### Download Youtube video as mp3
+
+def download_song(song_url):
+    """
+    Download a song using youtube url and song title
+    """
+    ydl_opts = {
+        'outtmpl': 'audios/%(title)s-%(id)s.%(ext)s',
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'wav',
+            'preferredquality': '192'
+        }],
+        'postprocessor_args': [
+            '-ar', '16000'
+        ],
+        'prefer_ffmpeg': True,
+        'keepvideo': False
+    }
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([song_url])
+
+
+youtube_links = ["https://www.youtube.com/watch?v=LKS-r_2XDBY",
+                 "https://www.youtube.com/watch?v=qoee24_-bss",
+                 "https://www.youtube.com/watch?v=1iYf-vINm8c"]
+
+for link in youtube_links:
+    download_song(link)
+
+
+################################################################################
+################################################################################
+### Transform audio to text
 
 FOLDER_AUDIO = "audios"
 FOLDER_TEXT = "texts"
@@ -11,7 +53,7 @@ print("starting...")
 
 if not os.path.isdir(FOLDER_AUDIO):
     os.mkdir(FOLDER_AUDIO)
-    
+
 if not os.path.isdir(FOLDER_TEXT):
     os.mkdir(FOLDER_TEXT)
 
