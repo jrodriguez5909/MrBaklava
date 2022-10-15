@@ -1,0 +1,7 @@
+boto3==1.24.85
+googletrans==3.0.0
+monotonic==1.6
+pocketsphinx==5.0.0
+protobuf==4.21.7
+pyaudio==0.2.12
+tensorflow==2.10.0
