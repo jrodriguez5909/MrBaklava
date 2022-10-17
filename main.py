@@ -1,6 +1,7 @@
 import youtube_dl
 import speech_recognition as sr
 import os
+import lyricsgenius as lg
 
 # from googletrans import Translator
 # from __future__ import unicode_literals
@@ -57,7 +58,7 @@ if not os.path.isdir(FOLDER_AUDIO):
 if not os.path.isdir(FOLDER_TEXT):
     os.mkdir(FOLDER_TEXT)
 
-paths = [os.path.join(FOLDER_AUDIO, nome) for nome in os.listdir(FOLDER_AUDIO)]
+paths = [os.path.join(FOLDER_AUDIO, name) for name in os.listdir(FOLDER_AUDIO)]
 files = [arq for arq in paths if os.path.isfile(arq)]
 wav_files = [arq for arq in files if arq.lower().endswith(".wav")]
 
@@ -83,17 +84,27 @@ print("finish")
 
 ##################################################################
 ##################################################################
-### Read text and translate from Dutch to English
+### Grab lyrics from Genius API
 
-# translator = Translator()
-#
-# # open text file in read mode
-# text_file = open("D:/data.txt", "r")
-#
-# # read whole file to a string
-# data = text_file.read()
-#
-# # close file
-# text_file.close()
-#
-# print(data)
+def get_lyrics(artists, song_limit):
+    c = 0
+    for artist in artists:
+        try:
+            songs = (genius.search_artist(artist, max_songs=song_limit, sort='popularity')).songs
+            song_lyrics_list = [song.lyrics for song in songs]
+            file = open(f"{artist}_lyrics_of_{len(song_lyrics_list)}_songs.txt", "w", encoding='utf-8')
+            file.write("\n \n \n \n \n".join(song_lyrics_list))
+            c += 1
+            print(f"Songs grabbed:{len(song_lyrics_list)}")
+            file.close()
+            print("___________________________________________________\n\n\n\n")
+        except:
+            print(f"some exception at {artist}: {c}")
+
+api_key = "fRQM59H4driQWn2tVpNr7mlUM-7eVp8vwthjcd1pfG2BMcGNaZzq_C_bPw-Nk8pM"
+genius = lg.Genius(api_key,
+                   skip_non_songs=True,
+                   excluded_terms=["Freestyle", "(Live)"],
+                   remove_section_headers=True)
+
+lyrics = get_lyrics(["Action Bronson"], 20)
