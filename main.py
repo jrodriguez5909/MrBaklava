@@ -107,4 +107,28 @@ genius = lg.Genius(api_key,
                    excluded_terms=["Freestyle", "(Live)"],
                    remove_section_headers=True)
 
-lyrics = get_lyrics(["Action Bronson"], 20)
+lyrics = get_lyrics(["Action Bronson"], 50)
+
+
+##################################################################
+##################################################################
+### Lyrics pre-processing
+
+remove_words = ['Lyrics', 'Embed'] #For some reason "embed" shows up at the end of each song with a # next to it
+
+with open('texts/Action Bronson_lyrics_of_50_songs.txt') as oldfile, open('texts/Action Bronson_lyrics_of_50_songs_v2.txt', 'w') as newfile:
+    for line in oldfile:
+        if not any(word in line for word in remove_words):
+            newfile.write(line)
+
+## This may remove just the word from each line:
+# bad_words = ['abc', 'def', 'ghi', 'jkl']
+#
+# with open('List of words.txt') as badfile, open('Clean list of words.txt', 'w') as cleanfile:
+#     for line in badfile:
+#         clean = True
+#         for word in bad_words:
+#             if word in line:
+#                 clean = False
+#         if clean == True:
+#             cleanfile.write(line)
