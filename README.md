@@ -21,10 +21,10 @@ See the **[NLP_analysis.ipynb](https://github.com/jrodriguez5909/MrBaklava/blob/
 
 ### Word frequency:
 <p align="center">
-  <img src="./img/word_frequency.png" alt="Statoscope example" width="400">
+  <img src="./img/word_frequency.jpeg" alt="Statoscope example" width="400">
 </p>
 
 ### Word cloud:
 <p align="center">
-  <img src="./img/word_cloud.png" alt="Statoscope example" width="400">
+  <img src="./img/word_cloud.jpeg" alt="Statoscope example" width="400">
 </p>
